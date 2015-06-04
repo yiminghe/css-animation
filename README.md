@@ -5,6 +5,9 @@ css-animation ui component for react
 
 [![NPM version][npm-image]][npm-url]
 
+[npm-image]: http://img.shields.io/npm/v/css-animation.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/css-animation
+
 ## Development
 
 ```
