@@ -1,7 +1,7 @@
 # css-animation
 ---
 
-css-animation ui component for react
+make css animation easier
 
 [![NPM version][npm-image]][npm-url]
 
@@ -38,6 +38,39 @@ anim(el,animationName,function(){});
 ```
 
 ## API
+
+### void anim(el:DOMElement, animationName:String, callback:Function)
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th style="width: 100px;">name</th>
+        <th style="width: 50px;">type</th>
+        <th style="width: 50px;">default</th>
+        <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>el</td>
+          <td>DOMElement</td>
+          <td></td>
+          <td>dom element to be animated</td>
+        </tr>
+        <tr>
+          <td>animationName</td>
+          <td>String</td>
+          <td></td>
+          <td>will add animationName as class to el,then setTimeout 0 to add ${animationName}-active to el</td>
+        </tr>
+        <tr>
+          <td>callback</td>
+          <td>Function</td>
+          <td></td>
+          <td>triggered when anim caused by animationName is done</td>
+        </tr>
+    </tbody>
+</table>
 
 
 ## Test Case
