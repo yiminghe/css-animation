@@ -56,7 +56,7 @@ function removeEventListener(node, eventName, eventListener) {
   node.removeEventListener(eventName, eventListener, false);
 }
 
-var ReactTransitionEvents = {
+var TransitionEvents = {
   addEndEventListener(node, eventListener) {
     if (endEvents.length === 0) {
       window.setTimeout(eventListener, 0);
@@ -79,4 +79,4 @@ var ReactTransitionEvents = {
   }
 };
 
-module.exports = ReactTransitionEvents;
+module.exports = TransitionEvents;

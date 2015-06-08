@@ -1,7 +1,7 @@
 'use strict';
 
-var Event = require('./event');
-var Css = require('./css');
+var Event = require('./Event');
+var Css = require('./Css');
 
 module.exports = function (node, transitionName, callback) {
   var className = transitionName;
