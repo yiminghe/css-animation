@@ -79,13 +79,14 @@ cssAnimation.style = function (node, style, callback) {
   }, 0);
 };
 
-cssAnimation.setTransition = function (node, v) {
+cssAnimation.setTransition = function (node, property, v) {
+  property = property || '';
   ['Webkit',
     'Moz',
     'O',
     // ms is special .... !
     'ms'].forEach(function (prefix) {
-      node.style[`${prefix}Transition`] = v;
+      node.style[`${prefix}Transition${property}`] = v;
     });
 };
 
