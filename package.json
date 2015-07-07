@@ -1,6 +1,6 @@
 {
   "name": "css-animation",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "css-animation ui component for react",
   "keywords": [
     "css-animation"
@@ -36,8 +36,7 @@
     "precommit-hook": "1.x",
     "rc-server": "3.x",
     "rc-tools": "3.x",
-    "react": "0.13.x",
-    "node-dev":"2.x"
+    "react": "0.13.x"
   },
   "precommit": [
     "precommit"
