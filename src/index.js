@@ -42,6 +42,14 @@ var cssAnimation = function (node, transitionName, callback) {
     Css.addClass(node, activeClassName);
     node.rcAnimTimeout = null;
   }, 0);
+
+  return {
+    stop: function () {
+      if (node.rcEndListener) {
+        node.rcEndListener();
+      }
+    }
+  };
 };
 
 cssAnimation.style = function (node, style, callback) {
@@ -92,5 +100,6 @@ cssAnimation.setTransition = function (node, property, v) {
 
 cssAnimation.addClass = Css.addClass;
 cssAnimation.removeClass = Css.removeClass;
+cssAnimation.isCssAnimationSupported = Event.endEvents.length !== 0;
 
 module.exports = cssAnimation;
