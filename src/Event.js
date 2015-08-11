@@ -1,13 +1,10 @@
-
-'use strict';
-
-var EVENT_NAME_MAP = {
+const EVENT_NAME_MAP = {
   transitionend: {
     transition: 'transitionend',
     WebkitTransition: 'webkitTransitionEnd',
     MozTransition: 'mozTransitionEnd',
     OTransition: 'oTransitionEnd',
-    msTransition: 'MSTransitionEnd'
+    msTransition: 'MSTransitionEnd',
   },
 
   animationend: {
@@ -15,15 +12,15 @@ var EVENT_NAME_MAP = {
     WebkitAnimation: 'webkitAnimationEnd',
     MozAnimation: 'mozAnimationEnd',
     OAnimation: 'oAnimationEnd',
-    msAnimation: 'MSAnimationEnd'
-  }
+    msAnimation: 'MSAnimationEnd',
+  },
 };
 
-var endEvents = [];
+const endEvents = [];
 
 function detectEvents() {
-  var testEl = document.createElement('div');
-  var style = testEl.style;
+  const testEl = document.createElement('div');
+  const style = testEl.style;
 
   if (!('AnimationEvent' in window)) {
     delete EVENT_NAME_MAP.animationend.animation;
@@ -33,12 +30,14 @@ function detectEvents() {
     delete EVENT_NAME_MAP.transitionend.transition;
   }
 
-  for (var baseEventName in EVENT_NAME_MAP) {
-    var baseEvents = EVENT_NAME_MAP[baseEventName];
-    for (var styleName in baseEvents) {
-      if (styleName in style) {
-        endEvents.push(baseEvents[styleName]);
-        break;
+  for (const baseEventName in EVENT_NAME_MAP) {
+    if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
+      const baseEvents = EVENT_NAME_MAP[baseEventName];
+      for (const styleName in baseEvents) {
+        if (styleName in style) {
+          endEvents.push(baseEvents[styleName]);
+          break;
+        }
       }
     }
   }
@@ -56,13 +55,13 @@ function removeEventListener(node, eventName, eventListener) {
   node.removeEventListener(eventName, eventListener, false);
 }
 
-var TransitionEvents = {
+const TransitionEvents = {
   addEndEventListener(node, eventListener) {
     if (endEvents.length === 0) {
       window.setTimeout(eventListener, 0);
       return;
     }
-    endEvents.forEach(function (endEvent) {
+    endEvents.forEach((endEvent) => {
       addEventListener(node, endEvent, eventListener);
     });
   },
@@ -73,10 +72,10 @@ var TransitionEvents = {
     if (endEvents.length === 0) {
       return;
     }
-    endEvents.forEach(function (endEvent) {
+    endEvents.forEach((endEvent) => {
       removeEventListener(node, endEvent, eventListener);
     });
-  }
+  },
 };
 
 module.exports = TransitionEvents;

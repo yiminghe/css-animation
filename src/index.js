@@ -1,11 +1,45 @@
-'use strict';
+const Event = require('./Event');
+const Css = require('./Css');
+const isCssAnimationSupported = Event.endEvents.length !== 0;
 
-var Event = require('./Event');
-var Css = require('./Css');
+function getDuration(node, name) {
+  const style = window.getComputedStyle(node);
+  const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+  let ret = '';
+  for (let i = 0; i < prefixes.length; i++) {
+    ret = style.getPropertyValue(prefixes[i] + name);
+    if (ret) {
+      break;
+    }
+  }
+  return (ret);
+}
 
-var cssAnimation = function (node, transitionName, callback) {
-  var className = transitionName;
-  var activeClassName = className + '-active';
+function fixBrowserByTimeout(node) {
+  if (isCssAnimationSupported) {
+    const transitionDuration = parseFloat(getDuration(node, 'transition-duration')) || 0;
+    const animationDuration = parseFloat(getDuration(node, 'animation-duration')) || 0;
+    const time = Math.max(transitionDuration, animationDuration);
+    // sometimes, browser bug
+    node.rcEndAnimTimeout = setTimeout(() => {
+      node.rcEndAnimTimeout = null;
+      if (node.rcEndListener) {
+        node.rcEndListener();
+      }
+    }, (time) * 1000 + 200);
+  }
+}
+
+function clearBrowserBugTimeout(node) {
+  if (node.rcEndAnimTimeout) {
+    clearTimeout(node.rcEndAnimTimeout);
+    node.rcEndAnimTimeout = null;
+  }
+}
+
+const cssAnimation = (node, transitionName, callback) => {
+  const className = transitionName;
+  const activeClassName = className + '-active';
 
   if (node.rcEndListener) {
     node.rcEndListener();
@@ -20,6 +54,8 @@ var cssAnimation = function (node, transitionName, callback) {
       clearTimeout(node.rcAnimTimeout);
       node.rcAnimTimeout = null;
     }
+
+    clearBrowserBugTimeout(node);
 
     Css.removeClass(node, className);
     Css.removeClass(node, activeClassName);
@@ -39,20 +75,21 @@ var cssAnimation = function (node, transitionName, callback) {
   Css.addClass(node, className);
 
   node.rcAnimTimeout = setTimeout(() => {
-    Css.addClass(node, activeClassName);
     node.rcAnimTimeout = null;
+    Css.addClass(node, activeClassName);
+    fixBrowserByTimeout(node);
   }, 0);
 
   return {
-    stop: function () {
+    stop() {
       if (node.rcEndListener) {
         node.rcEndListener();
       }
-    }
+    },
   };
 };
 
-cssAnimation.style = function (node, style, callback) {
+cssAnimation.style = (node, style, callback) => {
   if (node.rcEndListener) {
     node.rcEndListener();
   }
@@ -67,6 +104,8 @@ cssAnimation.style = function (node, style, callback) {
       node.rcAnimTimeout = null;
     }
 
+    clearBrowserBugTimeout(node);
+
     Event.removeEndEventListener(node, node.rcEndListener);
     node.rcEndListener = null;
 
@@ -80,26 +119,35 @@ cssAnimation.style = function (node, style, callback) {
   Event.addEndEventListener(node, node.rcEndListener);
 
   node.rcAnimTimeout = setTimeout(() => {
-    for (var s in style) {
-      node.style[s] = style[s];
+    for (const s in style) {
+      if (style.hasOwnProperty(s)) {
+        node.style[s] = style[s];
+      }
     }
     node.rcAnimTimeout = null;
+    fixBrowserByTimeout(node);
   }, 0);
 };
 
-cssAnimation.setTransition = function (node, property, v) {
+cssAnimation.setTransition = (node, p, value) => {
+  let property = p;
+  let v = value;
+  if (value === undefined) {
+    v = property;
+    property = '';
+  }
   property = property || '';
   ['Webkit',
     'Moz',
     'O',
     // ms is special .... !
-    'ms'].forEach(function (prefix) {
+    'ms'].forEach((prefix) => {
       node.style[`${prefix}Transition${property}`] = v;
     });
 };
 
 cssAnimation.addClass = Css.addClass;
 cssAnimation.removeClass = Css.removeClass;
-cssAnimation.isCssAnimationSupported = Event.endEvents.length !== 0;
+cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 
 module.exports = cssAnimation;
