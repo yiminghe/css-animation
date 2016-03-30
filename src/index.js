@@ -1,10 +1,17 @@
-const Event = require('./Event');
-const Css = require('./Css');
+import Event from './Event';
 const isCssAnimationSupported = Event.endEvents.length !== 0;
+import classes from 'component-classes';
+
+const capitalPrefixes = ['Webkit',
+  'Moz',
+  'O',
+  // ms is special .... !
+  'ms'];
+const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 
 function getDuration(node, name) {
   const style = window.getComputedStyle(node);
-  const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+
   let ret = '';
   for (let i = 0; i < prefixes.length; i++) {
     ret = style.getPropertyValue(prefixes[i] + name);
@@ -37,9 +44,19 @@ function clearBrowserBugTimeout(node) {
   }
 }
 
-const cssAnimation = (node, transitionName, callback) => {
+const cssAnimation = (node, transitionName, endCallback) => {
   const className = transitionName;
-  const activeClassName = className + '-active';
+  const activeClassName = `${className}-active`;
+  let end = endCallback;
+  let start;
+  let active;
+  const nodeClasses = classes(node);
+
+  if (endCallback && Object.prototype.toString.call(endCallback) === '[object Object]') {
+    end = endCallback.end;
+    start = endCallback.start;
+    active = endCallback.active;
+  }
 
   if (node.rcEndListener) {
     node.rcEndListener();
@@ -57,26 +74,33 @@ const cssAnimation = (node, transitionName, callback) => {
 
     clearBrowserBugTimeout(node);
 
-    Css.removeClass(node, className);
-    Css.removeClass(node, activeClassName);
+    nodeClasses.remove(className);
+    nodeClasses.remove(activeClassName);
 
     Event.removeEndEventListener(node, node.rcEndListener);
     node.rcEndListener = null;
 
-    // Usually this optional callback is used for informing an owner of
+    // Usually this optional end is used for informing an owner of
     // a leave animation and telling it to remove the child.
-    if (callback) {
-      callback();
+    if (end) {
+      end();
     }
   };
 
   Event.addEndEventListener(node, node.rcEndListener);
 
-  Css.addClass(node, className);
+  nodeClasses.add(className);
+
+  if (start) {
+    start();
+  }
 
   node.rcAnimTimeout = setTimeout(() => {
     node.rcAnimTimeout = null;
-    Css.addClass(node, activeClassName);
+    nodeClasses.add(activeClassName);
+    if (active) {
+      active();
+    }
     fixBrowserByTimeout(node);
   }, 0);
 
@@ -137,17 +161,11 @@ cssAnimation.setTransition = (node, p, value) => {
     property = '';
   }
   property = property || '';
-  ['Webkit',
-    'Moz',
-    'O',
-    // ms is special .... !
-    'ms'].forEach((prefix) => {
-      node.style[`${prefix}Transition${property}`] = v;
-    });
+  capitalPrefixes.forEach((prefix) => {
+    node.style[`${prefix}Transition${property}`] = v;
+  });
 };
 
-cssAnimation.addClass = Css.addClass;
-cssAnimation.removeClass = Css.removeClass;
 cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 
-module.exports = cssAnimation;
+export default cssAnimation;

@@ -72,14 +72,20 @@ anim(el,animationName,function(){});
     </tbody>
 </table>
 
-
 ## Test Case
 
-http://localhost:9001/tests/runner.html?coverage
+```
+npm test
+npm run chrome-test
+```
 
 ## Coverage
 
-http://localhost:9001/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:9000/tests/runner.html?coverage
+```
+npm run coverage
+```
+
+open coverage/ dir
 
 ## License
 

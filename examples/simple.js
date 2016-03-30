@@ -1,11 +1,8 @@
-// use jsx to render html, do not modify simple.html
-'use strict';
+import anim from 'css-animation';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-
-var anim = require('css-animation');
-var React = require('react');
-
-var style = `
+const style = `
 
 .box {
   background:red;
@@ -56,23 +53,23 @@ var style = `
 }
 `;
 
-var show = true;
+let show = true;
 
 function toggle() {
-  var t = document.getElementById('t');
-  var b = document.getElementById('b');
+  const t = document.getElementById('t');
+  const b = document.getElementById('b');
   b.disabled = true;
-  t.style.visibility ='';
-  anim(t, 'fade-' + (show ? 'leave' : 'enter'), function () {
+  t.style.visibility = '';
+  anim(t, `fade-${show ? 'leave' : 'enter'}`, () => {
     t.style.visibility = show ? '' : 'hidden';
     b.disabled = false;
   });
   show = !show;
 }
 
-React.render(<div>
-  <style dangerouslySetInnerHTML={{__html: style}}></style>
-  <div className="box" id='t'>
+ReactDOM.render(<div>
+  <style dangerouslySetInnerHTML={{ __html: style }}></style>
+  <div className="box" id="t">
   </div>
-  <button onClick={toggle} id='b'>toggle</button>
+  <button onClick={toggle} id="b">toggle</button>
 </div>, document.getElementById('__react-content'));

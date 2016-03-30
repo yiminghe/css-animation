@@ -66,7 +66,7 @@ const TransitionEvents = {
     });
   },
 
-  endEvents: endEvents,
+  endEvents,
 
   removeEndEventListener(node, eventListener) {
     if (endEvents.length === 0) {
@@ -78,4 +78,4 @@ const TransitionEvents = {
   },
 };
 
-module.exports = TransitionEvents;
+export default TransitionEvents;
