@@ -19,7 +19,7 @@ npm start
 
 http://localhost:9001/examples/
 
-online example: http://yiminghe.github.io/css-animation/build/examples/
+online example: http://yiminghe.github.io/css-animation/
 
 
 ## Feature
