@@ -89,20 +89,20 @@ const cssAnimation = (node, transitionName, endCallback) => {
 
   Event.addEndEventListener(node, node.rcEndListener);
 
-  nodeClasses.add(className);
-
   if (start) {
     start();
   }
+  nodeClasses.add(className);
 
   node.rcAnimTimeout = setTimeout(() => {
     node.rcAnimTimeout = null;
     nodeClasses.add(activeClassName);
     if (active) {
-      active();
+      setTimeout(active, 0);
     }
     fixBrowserByTimeout(node);
-  }, 0);
+    // 30ms for firefox
+  }, 30);
 
   return {
     stop() {
