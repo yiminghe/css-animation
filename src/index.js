@@ -9,7 +9,7 @@ const capitalPrefixes = ['Webkit',
   'ms'];
 const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 
-function getDuration(node, name) {
+function getCssProperty(node, name) {
   const style = window.getComputedStyle(node);
 
   let ret = '';
@@ -24,9 +24,11 @@ function getDuration(node, name) {
 
 function fixBrowserByTimeout(node) {
   if (isCssAnimationSupported) {
-    const transitionDuration = parseFloat(getDuration(node, 'transition-duration')) || 0;
-    const animationDuration = parseFloat(getDuration(node, 'animation-duration')) || 0;
-    const time = Math.max(transitionDuration, animationDuration);
+    const transitionDelay = parseFloat(getCssProperty(node, 'transition-delay')) || 0;
+    const transitionDuration = parseFloat(getCssProperty(node, 'transition-duration')) || 0;
+    const animationDelay = parseFloat(getCssProperty(node, 'animation-delay')) || 0;
+    const animationDuration = parseFloat(getCssProperty(node, 'animation-duration')) || 0;
+    const time = Math.max(transitionDuration + transitionDelay, animationDuration + animationDelay);
     // sometimes, browser bug
     node.rcEndAnimTimeout = setTimeout(() => {
       node.rcEndAnimTimeout = null;
