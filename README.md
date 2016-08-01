@@ -61,7 +61,7 @@ anim(el,animationName,function(){});
           <td>animationName</td>
           <td>String|Object</td>
           <td></td>
-          <td>will add animationName (if string) or animationName.name (if object) as class to el, then setTimeout 0 to add ${animationName}-active (if string) or animationName.nameActive (if object) to el</td>
+          <td>will add animationName (if string) or animationName.name (if object) as class to el, then setTimeout 0 to add ${animationName}-active (if string) or animationName.active (if object) to el</td>
         </tr>
         <tr>
           <td>callback</td>

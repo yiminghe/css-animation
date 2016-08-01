@@ -49,7 +49,7 @@ function clearBrowserBugTimeout(node) {
 const cssAnimation = (node, transitionName, endCallback) => {
   const nameIsObj = typeof transitionName === 'object';
   const className = nameIsObj ? transitionName.name : transitionName;
-  const activeClassName = nameIsObj ? transitionName.nameActive : `${className}-active`;
+  const activeClassName = nameIsObj ? transitionName.active : `${transitionName}-active`;
   let end = endCallback;
   let start;
   let active;
