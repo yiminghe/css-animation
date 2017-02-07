@@ -17,8 +17,8 @@
   "licenses": "MIT",
   "main": "./lib/index",
   "files": [
-    "lib",
-    "assets/*.css"
+    "index.js",
+    "src/"
   ],
   "config": {
     "port": 9001
