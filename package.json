@@ -18,7 +18,8 @@
   "main": "./lib/index",
   "files": [
     "lib",
-    "assets/*.css"
+    "assets/*.css",
+    "index.js"
   ],
   "config": {
     "port": 9001
