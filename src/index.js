@@ -12,6 +12,11 @@ const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 function getStyleProperty(node, name) {
   const style = window.getComputedStyle(node);
 
+  // FF bug: sometimes style is empty, throwing an error at line 22
+  if (!style) {
+    return 0;
+  }
+
   let ret = '';
   for (let i = 0; i < prefixes.length; i++) {
     ret = style.getPropertyValue(prefixes[i] + name);
