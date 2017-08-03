@@ -14,7 +14,7 @@
   "bugs": {
     "url": "http://github.com/yiminghe/css-animation/issues"
   },
-  "licenses": "MIT",
+  "license": "MIT",
   "main": "./lib/index",
   "files": [
     "lib",
