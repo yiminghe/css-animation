@@ -1,7 +1,7 @@
 import Event from './Event';
-const isCssAnimationSupported = Event.endEvents.length !== 0;
 import classes from 'component-classes';
 
+const isCssAnimationSupported = Event.endEvents.length !== 0;
 const capitalPrefixes = ['Webkit',
   'Moz',
   'O',
