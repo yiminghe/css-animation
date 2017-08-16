@@ -1,6 +1,6 @@
 {
   "name": "css-animation",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "css-animation",
   "keywords": [
     "css-animation"
@@ -22,13 +22,20 @@
     "es"
   ],
   "config": {
-    "port": 9001
+    "port": 9001,
+    "entry": {
+      "css-animation": [
+        "./src/index.js"
+      ]
+    }
   },
   "scripts": {
+    "dist": "rc-tools run dist --babel-runtime",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
-    "pub": "rc-tools run pub",
+    "pub": "rc-tools run pub --babel-runtime",
+    "compile": "rc-tools run compile --babel-runtime",
     "lint": "rc-tools run lint"
   },
   "devDependencies": {
@@ -42,6 +49,7 @@
     "lint"
   ],
   "dependencies": {
+    "babel-runtime": "6.x",
     "component-classes": "^1.2.5"
   }
 }

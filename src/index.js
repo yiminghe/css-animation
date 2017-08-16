@@ -171,4 +171,8 @@ cssAnimation.setTransition = (node, p, value) => {
 
 cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 
+export {
+  isCssAnimationSupported,
+};
+
 export default cssAnimation;
