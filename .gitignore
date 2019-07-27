@@ -26,4 +26,4 @@ build
 lib
 coverage
 yarn.lock
-es
+/pkg/

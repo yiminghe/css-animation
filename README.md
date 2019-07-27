@@ -17,7 +17,7 @@ npm start
 
 ## Example
 
-http://localhost:9001/examples/
+http://localhost:6006/
 
 online example: http://yiminghe.github.io/css-animation/
 
@@ -71,21 +71,6 @@ anim(el,animationName,function(){});
         </tr>
     </tbody>
 </table>
-
-## Test Case
-
-```
-npm test
-npm run chrome-test
-```
-
-## Coverage
-
-```
-npm run coverage
-```
-
-open coverage/ dir
 
 ## License
 

@@ -2,11 +2,13 @@ import Event from './Event';
 import classes from 'component-classes';
 
 const isCssAnimationSupported = Event.endEvents.length !== 0;
-const capitalPrefixes = ['Webkit',
+const capitalPrefixes = [
+  'Webkit',
   'Moz',
   'O',
   // ms is special .... !
-  'ms'];
+  'ms',
+];
 const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
 
 function getStyleProperty(node, name) {
@@ -19,23 +21,30 @@ function getStyleProperty(node, name) {
       break;
     }
   }
-  return (ret);
+  return ret;
 }
 
 function fixBrowserByTimeout(node) {
   if (isCssAnimationSupported) {
-    const transitionDelay = parseFloat(getStyleProperty(node, 'transition-delay')) || 0;
-    const transitionDuration = parseFloat(getStyleProperty(node, 'transition-duration')) || 0;
-    const animationDelay = parseFloat(getStyleProperty(node, 'animation-delay')) || 0;
-    const animationDuration = parseFloat(getStyleProperty(node, 'animation-duration')) || 0;
-    const time = Math.max(transitionDuration + transitionDelay, animationDuration + animationDelay);
+    const transitionDelay =
+      parseFloat(getStyleProperty(node, 'transition-delay')) || 0;
+    const transitionDuration =
+      parseFloat(getStyleProperty(node, 'transition-duration')) || 0;
+    const animationDelay =
+      parseFloat(getStyleProperty(node, 'animation-delay')) || 0;
+    const animationDuration =
+      parseFloat(getStyleProperty(node, 'animation-duration')) || 0;
+    const time = Math.max(
+      transitionDuration + transitionDelay,
+      animationDuration + animationDelay,
+    );
     // sometimes, browser bug
     node.rcEndAnimTimeout = setTimeout(() => {
       node.rcEndAnimTimeout = null;
       if (node.rcEndListener) {
         node.rcEndListener();
       }
-    }, (time) * 1000 + 200);
+    }, time * 1000 + 200);
   }
 }
 
@@ -49,13 +58,18 @@ function clearBrowserBugTimeout(node) {
 const cssAnimation = (node, transitionName, endCallback) => {
   const nameIsObj = typeof transitionName === 'object';
   const className = nameIsObj ? transitionName.name : transitionName;
-  const activeClassName = nameIsObj ? transitionName.active : `${transitionName}-active`;
+  const activeClassName = nameIsObj
+    ? transitionName.active
+    : `${transitionName}-active`;
   let end = endCallback;
   let start;
   let active;
   const nodeClasses = classes(node);
 
-  if (endCallback && Object.prototype.toString.call(endCallback) === '[object Object]') {
+  if (
+    endCallback &&
+    Object.prototype.toString.call(endCallback) === '[object Object]'
+  ) {
     end = endCallback.end;
     start = endCallback.start;
     active = endCallback.active;
@@ -65,7 +79,7 @@ const cssAnimation = (node, transitionName, endCallback) => {
     node.rcEndListener();
   }
 
-  node.rcEndListener = (e) => {
+  node.rcEndListener = e => {
     if (e && e.target !== node) {
       return;
     }
@@ -121,7 +135,7 @@ cssAnimation.style = (node, style, callback) => {
     node.rcEndListener();
   }
 
-  node.rcEndListener = (e) => {
+  node.rcEndListener = e => {
     if (e && e.target !== node) {
       return;
     }
@@ -164,15 +178,13 @@ cssAnimation.setTransition = (node, p, value) => {
     property = '';
   }
   property = property || '';
-  capitalPrefixes.forEach((prefix) => {
+  capitalPrefixes.forEach(prefix => {
     node.style[`${prefix}Transition${property}`] = v;
   });
 };
 
 cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 
-export {
-  isCssAnimationSupported,
-};
+export { isCssAnimationSupported };
 
 export default cssAnimation;

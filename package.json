@@ -1,6 +1,6 @@
 {
   "name": "css-animation",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "css-animation",
   "keywords": [
     "css-animation"
@@ -15,41 +15,53 @@
     "url": "http://github.com/yiminghe/css-animation/issues"
   },
   "license": "MIT",
-  "main": "./lib/index",
-  "module": "./es/index",
-  "files": [
-    "lib",
-    "es"
-  ],
-  "config": {
-    "port": 9001,
-    "entry": {
-      "css-animation": [
-        "./src/index.js"
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**/*"
+          ]
+        }
+      ],
+      [
+        "@pika/plugin-build-web"
       ]
-    }
+    ]
   },
   "scripts": {
-    "dist": "rc-tools run dist --babel-runtime",
-    "build": "rc-tools run build",
-    "gh-pages": "rc-tools run gh-pages",
-    "start": "rc-tools run server",
-    "pub": "rc-tools run pub --babel-runtime",
-    "compile": "rc-tools run compile --babel-runtime",
-    "lint": "rc-tools run lint"
+    "prettier": "prettier --write \"{src,stories}/**/*.{js,tsx}\"",
+    "start": "start-storybook -p 6006",
+    "pub": "npm run build && npm publish pkg",
+    "build": "pack build",
+    "deploy": "storybook-to-ghpages",
+    "lint-staged": "lint-staged"
   },
   "devDependencies": {
-    "expect.js": "0.3.x",
+    "@pika/plugin-build-types": "^0.5.1",
+    "@pika/plugin-build-web": "^0.5.1",
+    "@pika/plugin-standard-pkg": "^0.5.1",
+    "@pika/types": "^0.5.1",
+    "@storybook/react": "^5.1.9",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "babel-loader": "^8.0.6",
+    "lint-staged": "^9.2.1",
     "pre-commit": "1.x",
-    "rc-tools": "6.x",
-    "react": "15.x",
-    "react-dom": "15.x"
+    "prettier": "^1.18.2",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "lint-staged": {
+    "*.{tsx,js,jsx,ts}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "pre-commit": [
-    "lint"
+    "lint-staged"
   ],
   "dependencies": {
-    "babel-runtime": "6.x",
-    "component-classes": "^1.2.5"
+    "component-classes": "^1.2.6"
   }
 }

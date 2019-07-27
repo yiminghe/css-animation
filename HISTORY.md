@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.6.0 / 2019-07-28
+
+- use pack
+
 ## 1.5.0 / 2018-11-12
 
 - support startEventListenter

@@ -1,7 +1,7 @@
-import Events from 'css-animation/lib/Event';
+import Events from '../src/Event';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { storiesOf } from '@storybook/react';
 const style = `
 .box {
   background:red;
@@ -63,9 +63,16 @@ function toggle() {
   }
 }
 
-ReactDOM.render(<div>
-  <style dangerouslySetInnerHTML={{ __html: style }}></style>
-  <div className="box" id="t">
+const Demo = () => (
+  <div>
+    <style dangerouslySetInnerHTML={{ __html: style }}></style>
+    <div className="box" id="t"></div>
+    <button onClick={toggle}>toggle</button>
   </div>
-  <button onClick={toggle}>toggle</button>
-</div>, document.getElementById('__react-content'));
+);
+
+Demo.story = 'events';
+
+storiesOf(Demo.story, module).add('demo', () => <Demo />);
+
+export default Demo;
