@@ -33,7 +33,7 @@ online example: http://yiminghe.github.io/css-animation/
 ## Usage
 
 ```js
-var anim = require('css-animation');
+import anim from 'css-animation';
 anim(el,animationName,function(){});
 ```
 
