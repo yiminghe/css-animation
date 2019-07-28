@@ -35,10 +35,12 @@
     "start": "start-storybook -p 6006",
     "pub": "npm run build && npm publish pkg",
     "build": "pack build",
+    "postbuild": "ln -s dist-src pkg/es && ln -s dist-src pkg/lib",
     "deploy": "storybook-to-ghpages",
     "lint-staged": "lint-staged"
   },
   "devDependencies": {
+    "@pika/pack": "^0.4.0",
     "@pika/plugin-build-types": "^0.5.1",
     "@pika/plugin-build-web": "^0.5.1",
     "@pika/plugin-standard-pkg": "^0.5.1",
