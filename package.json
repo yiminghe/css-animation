@@ -1,6 +1,6 @@
 {
   "name": "css-animation",
-  "version": "1.6.0",
+  "version": "2.0.1",
   "description": "css-animation",
   "keywords": [
     "css-animation"
@@ -27,6 +27,9 @@
       ],
       [
         "@pika/plugin-build-web"
+      ],
+      [
+        "@pika/plugin-build-node"
       ]
     ]
   },
@@ -39,6 +42,7 @@
     "lint-staged": "lint-staged"
   },
   "devDependencies": {
+    "@pika/plugin-build-node": "^0.5.1",
     "@pika/plugin-build-types": "^0.5.1",
     "@pika/plugin-build-web": "^0.5.1",
     "@pika/plugin-standard-pkg": "^0.5.1",
