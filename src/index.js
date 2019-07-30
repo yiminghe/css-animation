@@ -1,5 +1,5 @@
 import Event from './Event';
-import classes from 'component-classes';
+import classes from './classes';
 
 const isCssAnimationSupported = Event.endEvents.length !== 0;
 const capitalPrefixes = [

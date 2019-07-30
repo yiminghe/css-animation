@@ -1,6 +1,6 @@
 {
   "name": "css-animation",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "css-animation",
   "keywords": [
     "css-animation"
@@ -64,8 +64,5 @@
   },
   "pre-commit": [
     "lint-staged"
-  ],
-  "dependencies": {
-    "component-classes": "^1.2.6"
-  }
+  ]
 }
