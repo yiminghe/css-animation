@@ -2,6 +2,7 @@ import { addParameters, configure } from '@storybook/react';
 
 addParameters({
   options: {
+    showAddonsPanel: false,
     theme: {
       brandTitle: 'css-animation',
       brandUrl: 'https://github.com/yiminghe/css-animation/',
