@@ -9,7 +9,7 @@ const capitalPrefixes = [
   // ms is special .... !
   'ms',
 ];
-const prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+const prefixes = [ '-webkit-', '-moz-', '-o-', 'ms-', '' ];
 
 function getStyleProperty(node, name) {
   // old ff need null, https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
@@ -185,6 +185,6 @@ cssAnimation.setTransition = (node, p, value) => {
 
 cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
 
-export { isCssAnimationSupported };
+export { isCssAnimationSupported, Event };
 
 export default cssAnimation;
